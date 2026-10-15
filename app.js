@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const config = window.MOONPHASE_CONFIG || {};
-  const ready = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(config.endpoint || '') && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(config.contactEmail || '');
+  const ready = /^https:\/\/script\.google\.com\/macros\/s\/[\w-]+\/exec$/.test(config.endpoint || '');
   const $ = id => document.getElementById(id);
   const uuid = () => crypto.randomUUID ? crypto.randomUUID() : Array.from(crypto.getRandomValues(new Uint8Array(16)), x => x.toString(16).padStart(2, '0')).join('');
   let visitId = uuid();
@@ -52,12 +52,6 @@
   $('analytics-decline').addEventListener('click', () => setPreference(false));
   banner.hidden = !ready || preference !== null;
   if (ready) {
-    const contact = $('privacy-contact');
-    contact.textContent = 'Para solicitar a exclusão dos seus dados ou deixar de receber contatos, escreva para ';
-    const link = document.createElement('a');
-    link.href = `mailto:${config.contactEmail}`;
-    link.textContent = config.contactEmail;
-    contact.append(link, '.');
     track('visita');
   } else {
     message.textContent = 'Os cadastros ainda não estão abertos. Você pode explorar o formulário, mas nenhum dado será enviado nesta prévia.';
